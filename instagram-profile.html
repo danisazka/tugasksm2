@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mhmddnisss - Instagram</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    nav#sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 72px;
+      background-color: #ffffff;
+      border-right: 1px solid #dbdbdb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 0;
+      gap: 4px;
+      z-index: 100;
+    }
+
+    nav#sidebar .nav-logo {
+      margin-bottom: 12px;
+      padding: 12px;
+    }
+
+    nav#sidebar .nav-item {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.15s;
+    }
+
+    nav#sidebar .nav-item:hover {
+      background-color: #f2f2f2;
+    }
+
+    nav#sidebar .nav-item svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    nav#sidebar .nav-item .badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background-color: #ff3040;
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 10px;
+      min-width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+    }
+
+    nav#sidebar .nav-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      padding: 0 12px 12px;
+    }
+
+    nav#sidebar .nav-bottom .nav-item {
+      width: 100%;
+    }
+
+    .page-wrapper {
+      margin-left: 72px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main {
+      width: 100%;
+      max-width: 935px;
+      padding: 30px 20px 0;
+    }
+
+    header#profile-header {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 48px;
+      margin-bottom: 24px;
+    }
+
+    .profile-avatar-wrapper {
+      flex-shrink: 0;
+    }
+
+    .profile-avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #dbdbdb;
+    }
+
+    .profile-avatar-placeholder {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #dbdbdb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 300;
+      color: #888;
+    }
+
+    .profile-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .profile-name-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .profile-username {
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    .profile-verified {
+      width: 20px;
+      height: 20px;
+      color: #000;
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #dbdbdb;
+      background-color: #efefef;
+      color: #000000;
+      transition: background-color 0.15s;
+      min-width: 120px;
+    }
+
+    .btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: 40px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+    }
+
+    .stat-item span.count {
+      font-weight: 600;
+    }
+
+    section#highlights {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+      margin-bottom: 20px;
+      padding: 12px 0;
+    }
+
+    .highlight-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .highlight-circle {
+      width: 77px;
+      height: 77px;
+      border-radius: 50%;
+      border: 1px solid #dbdbdb;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+    }
+
+    .highlight-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .highlight-circle.add-new {
+      font-size: 28px;
+      color: #000;
+    }
+
+    .highlight-label {
+      font-size: 12px;
+      color: #000;
+      text-align: center;
+    }
+
+    nav#post-tabs {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      border-top: 1px solid #dbdbdb;
+      margin-bottom: 4px;
+    }
+
+    .tab-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 24px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #737373;
+      border-top: 2px solid transparent;
+      margin-top: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .tab-item.active {
+      color: #000000;
+      border-top-color: #000000;
+    }
+
+    .tab-item:hover {
+      color: #000;
+    }
+
+    .tab-item svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    section#posts-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      section#posts-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    article.post-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+      background-color: #efefef;
+    }
+
+    article.post-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.2s;
+    }
+
+    article.post-item:hover img {
+      filter: brightness(0.8);
+    }
+
+    article.post-item .post-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      background-color: rgba(0,0,0,0.3);
+    }
+
+    article.post-item:hover .post-overlay {
+      opacity: 1;
+    }
+
+    .post-overlay-stats {
+      display: flex;
+      gap: 24px;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    footer#site-footer {
+      width: 100%;
+      max-width: 935px;
+      padding: 20px;
+      border-top: 1px solid #dbdbdb;
+    }
+
+    footer#site-footer .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    footer#site-footer .footer-links a {
+      font-size: 12px;
+      color: #737373;
+      text-decoration: none;
+    }
+
+    footer#site-footer .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    footer#site-footer .footer-copy {
+      text-align: center;
+      font-size: 12px;
+      color: #737373;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    aside#dm-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: white;
+      border-top: 1px solid #dbdbdb;
+      z-index: 50;
+    }
+
+    .msg-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #ffffff;
+      border: 1px solid #dbdbdb;
+      border-radius: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .msg-btn .badge-red {
+      background-color: #ff3040;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 2px 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="sidebar" aria-label="Navigasi Utama">
+    <div class="nav-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <circle cx="12" cy="12" r="4"></circle>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"></circle>
+      </svg>
+    </div>
+
+    <div class="nav-item" title="Beranda">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    </div>
+
+    <div class="nav-item" title="Reels">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+    </div>
+
+    <div class="nav-item" title="Notifikasi">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.25h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6 6l.27.16a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 17.5v-.58z"></path></svg>
+      <span class="badge">9+</span>
+    </div>
+
+    <div class="nav-item" title="Cari">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </div>
+
+    <div class="nav-item" title="Jelajahi">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+    </div>
+
+    <div class="nav-item" title="Suka">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    </div>
+
+    <div class="nav-item" title="Buat">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </div>
+
+    <div class="nav-bottom">
+      <div class="nav-item" title="Profil">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      </div>
+      <div class="nav-item" title="Lainnya">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </div>
+      <div class="nav-item" title="Channel">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <main>
+
+      <header id="profile-header">
+        <div class="profile-avatar-wrapper">
+          <img src="foto-profil.jpg" alt="Foto profil" class="profile-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="profile-avatar-placeholder" style="display:none;">?</div>
+        </div>
+
+        <div class="profile-info">
+          <div class="profile-name-row">
+            <h1 class="profile-username">mhmddnisss</h1>
+            <svg class="profile-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="8 12 11 15 16 9"></polyline>
+            </svg>
+          </div>
+
+          <div class="profile-actions">
+            <button class="btn">Edit profil</button>
+            <button class="btn">Lihat arsip</button>
+          </div>
+
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="count">4</span>
+              <span class="label">kiriman</span>
+            </div>
+            <div class="stat-item">
+              <span class="count">286</span>
+              <span class="label">pengikut</span>
+            </div>
+            <div class="stat-item">
+              <span class="count">277</span>
+              <span class="label">diikuti</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section id="highlights" aria-label="Highlight Stories">
+        <div class="highlight-item">
+          <div class="highlight-circle">
+            <img src="highlight-1.jpg" alt="Highlight 1" onerror="this.style.display='none';" />
+          </div>
+        </div>
+
+        <div class="highlight-item">
+          <div class="highlight-circle add-new">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </div>
+          <span class="highlight-label">Baru</span>
+        </div>
+      </section>
+
+      <nav id="post-tabs" aria-label="Navigasi Konten Profil">
+        <div class="tab-item active">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+        </div>
+        <div class="tab-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <div class="tab-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </div>
+      </nav>
+
+      <section id="posts-grid" aria-label="Galeri Foto">
+
+        <article class="post-item">
+          <img src="foto-post-4.jpg" alt="Postingan 1" />
+          <div class="post-overlay">
+            <div class="post-overlay-stats">
+              <span>❤️ 40</span>
+              <span>💬 0</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-item">
+          <img src="foto-post-3.jpg" alt="Postingan 2" />
+          <div class="post-overlay">
+            <div class="post-overlay-stats">
+              <span>❤️ 54</span>
+              <span>💬 7</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-item">
+          <img src="foto-post-2.jpg" alt="Postingan 3" />
+          <div class="post-overlay">
+            <div class="post-overlay-stats">
+              <span>❤️ 50</span>
+              <span>💬 3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-item">
+          <img src="foto-post-1.jpg" alt="Postingan 4" />
+          <div class="post-overlay">
+            <div class="post-overlay-stats">
+              <span>❤️ 52</span>
+              <span>💬 3</span>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+    </main>
+
+    <footer id="site-footer">
+      <nav class="footer-links" aria-label="Tautan Footer">
+        <a href="#">Meta</a>
+        <a href="#">Tentang</a>
+        <a href="#">Blog</a>
+        <a href="#">Pekerjaan</a>
+        <a href="#">Bantuan</a>
+        <a href="#">API</a>
+        <a href="#">Privasi</a>
+        <a href="#">Ketentuan</a>
+        <a href="#">Lokasi</a>
+        <a href="#">Populer</a>
+        <a href="#">Instagram Lite</a>
+        <a href="#">Meta AI</a>
+        <a href="#">Threads</a>
+        <a href="#">Pengunggahan Kontak &amp; Nonpengguna</a>
+        <a href="#">Verifikasi Meta</a>
+        <a href="#">Meta di Indonesia</a>
+      </nav>
+      <div class="footer-copy">
+        <span>Bahasa Indonesia ▾</span>
+        <span>© 2026 Instagram from Meta</span>
+      </div>
+    </footer>
+  </div>
+
+  <aside id="dm-bar">
+    <button class="msg-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <span class="badge-red">39</span>
+      <span>Pesan</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d);"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle></svg>
+    </div>
+  </aside>
+
+</body>
+</html>
